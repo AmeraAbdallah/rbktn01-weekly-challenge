@@ -43,27 +43,27 @@ function daBears() {
 // Which function(s) access the "chair" variable and get "Too Big!"
 // (Delete wrong answers, leave correct ones)
 
-var fairyTale1 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
+var fairyTale1 = ["papaBear", "mamaBear"]; //["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // Which function(s) access the "feeling" variable and get "Hungry"
 // (Delete wrong answers, leave correct ones)
 
-var fairyTale2 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
+var fairyTale2 = ["goldilocks"]; //["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // Which function(s) access the "porridge" variable and get "Too Cold!"
 // (Delete wrong answers, leave correct ones)
 
-var fairyTale3 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
+var fairyTale3 = ["mamaBear"]; //["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // Which function(s) access the "sleepy" variable and get undefined
 // (Delete wrong answers, leave correct ones)
 
-var fairyTale4 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
+var fairyTale4 = ["daBears", "papaBear", "mamaBear", "goldilocks"]; //["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // Which function(s) access the isFurry variable and get true
 // (Delete wrong answers, leave correct ones)
 
-var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
+var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear"]; //["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 
 // *************
@@ -83,9 +83,20 @@ var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // CODE HERE...
 
+function Vehicle(){
+    this.gasRemaining = 100;
+}
 
+Vehicle.prototype.drive = function(){
+    return this.gasRemaining -= 25;
+}
 
+var charger = new Vehicle();
+var mustang = new Vehicle();
 
+charger.drive();
+mustang.drive();
+mustang.drive();
 
 // -----------------------------------------------------------------------------
 
@@ -104,6 +115,12 @@ var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 // Your method may be passed punctuation, numbers or other non-letter characters
 // and should neither modify them nor break when encountering them.
 
+
+String.prototype.grammarPolice = function(){
+    return this.split(' ').map((word, i) => {
+        return word[0].toUpperCase() + word.substr(1, word.length);
+    }).join(' ');
+}
 
 
 
@@ -127,6 +144,12 @@ var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 
 // CODE HERE...
 
+function valueType(first, second){
+    if(first === second) return 'Exactly the same';
+    else if(first !== second && first == second) return 'Same value, different types';
+    else return 'Different values';
+}
+
 // *************
 // * PROBLEM 5 *
 // *************
@@ -147,10 +170,14 @@ var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear", "goldilocks"];
 var elephant = {
     name: 'Horton'
 }
-function large() {
 
+function large() {
     return 'My name is ' + this.name + ' and I am very heavy!'
 }
+
+var boundToElephant = large.bind(elephant);
+boundToElephant();
+
   // CODE HERE...
 
 // *************
@@ -165,6 +192,14 @@ function large() {
 
 // CODE HERE...
 
+function deathStar(capacity, crew){
+    return capacity.bind(crew);
+}
+
+var bounded = deathStar(function(){console.log('bounded to', this.name)}, {name: 'I am crew'});
+
+bounded();
+
 
 // *************
 // * PROBLEM 7 *
@@ -178,3 +213,12 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
+
+function accountingOffice(assets){
+    return function(liabilities){
+        return assets + liabilities;
+    }
+}
+
+var theClosured = accountingOffice(5);
+theClosured(4); //5+4 = 9
